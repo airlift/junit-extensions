@@ -14,6 +14,12 @@
     <version>1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <scm>
+        <connection>scm:git:git://github.com/airlift/junit-extensions.git</connection>
+        <tag>HEAD</tag>
+        <url>https://github.com/airlift/junit-extensions</url>
+    </scm>
+
     <properties>
         <project.build.targetJdk>17</project.build.targetJdk>
         <air.check.skip-spotbugs>true</air.check.skip-spotbugs>
