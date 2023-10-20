@@ -15,6 +15,7 @@ package io.airlift.junit;
 
 import io.airlift.junit.ReportMissingTestAnnotation.Failure;
 import org.assertj.core.util.Sets;
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.Method;
@@ -40,6 +41,21 @@ public class TestReportMissingAnnotations
                                     new Failure(method(B.class, "test8"), method(A.class, "test8")),
                                     new Failure(method(C.class, "test9"), method(A.class, "test9")),
                                     new Failure(method(B.class, "test9"), method(A.class, "test9"))));
+                });
+    }
+
+    @Test
+    public void testRepeatedTest()
+    {
+        assertThatThrownBy(() -> ReportMissingTestAnnotation.reportMissingTestAnnotations(RepeatedTestChild.class))
+                .isInstanceOf(MissingAnnotationsException.class)
+                .satisfies(e -> {
+                    MissingAnnotationsException exception = (MissingAnnotationsException) e;
+                    assertThat(exception.getTestClass()).isEqualTo(RepeatedTestChild.class);
+                    assertThat(exception.getFailures())
+                            .isEqualTo(Sets.set(
+                                    new Failure(method(RepeatedTestChild.class, "test3"), method(RepeatedTestParent.class, "test3")),
+                                    new Failure(method(RepeatedTestChild.class, "test4"), method(RepeatedTestParent.class, "test4"))));
                 });
     }
 
@@ -119,5 +135,38 @@ public class TestReportMissingAnnotations
         public void test7() {}
 
         public void test9() {}
+    }
+
+    class RepeatedTestChild
+            extends RepeatedTestParent
+    {
+        @RepeatedTest(0)
+        @Override
+        public void test1() {}
+
+        @Test
+        @Override
+        public void test2() {}
+
+        @Override
+        public void test3() {}
+
+        @Override
+        public void test4() {}
+    }
+
+    class RepeatedTestParent
+    {
+        @Test
+        public void test1() {}
+
+        @RepeatedTest(0)
+        public void test2() {}
+
+        @Test
+        public void test3() {}
+
+        @RepeatedTest(0)
+        public void test4() {}
     }
 }
