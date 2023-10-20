@@ -13,6 +13,7 @@
  */
 package io.airlift.junit;
 
+import org.junit.jupiter.api.RepeatedTest;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtensionContext;
 import org.junit.jupiter.api.extension.TestInstanceFactoryContext;
@@ -49,12 +50,12 @@ public class ReportMissingTestAnnotation
                     .filter(method -> !Modifier.isStatic(method.getModifiers()))
                     .filter(method -> !method.isBridge())
                     .filter(method -> !method.isSynthetic())
-                    .filter(method -> !method.isAnnotationPresent(Test.class))
+                    .filter(method -> !method.isAnnotationPresent(Test.class) && !method.isAnnotationPresent(RepeatedTest.class))
                     .collect(Collectors.toList());
 
             for (Method candidate : candidates) {
                 Optional<Method> annotatedBase = getOverridden(candidate).stream()
-                        .filter(method -> method.isAnnotationPresent(Test.class))
+                        .filter(method -> method.isAnnotationPresent(Test.class) || method.isAnnotationPresent(RepeatedTest.class))
                         .findFirst();
 
                 annotatedBase.ifPresent(method -> failures.add(new Failure(candidate, method)));
