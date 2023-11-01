@@ -1,1 +1,2 @@
 io.airlift.junit.ReportMissingTestAnnotation
+io.airlift.junit.InitializeLogging
