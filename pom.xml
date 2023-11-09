@@ -11,12 +11,12 @@
 
     <groupId>io.airlift</groupId>
     <artifactId>junit-extensions</artifactId>
-    <version>2</version>
+    <version>3-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <scm>
         <connection>scm:git:git://github.com/airlift/junit-extensions.git</connection>
-        <tag>2</tag>
+        <tag>HEAD</tag>
         <url>https://github.com/airlift/junit-extensions</url>
     </scm>
 
