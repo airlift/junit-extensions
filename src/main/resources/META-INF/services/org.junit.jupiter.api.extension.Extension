@@ -1,2 +1,3 @@
 io.airlift.junit.ReportMissingTestAnnotation
+io.airlift.junit.ReportStaticTestMethod
 io.airlift.junit.InitializeLogging
