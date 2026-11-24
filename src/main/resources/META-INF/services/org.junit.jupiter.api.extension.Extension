@@ -1,2 +1,3 @@
 io.airlift.junit.ReportMissingTestAnnotation
+io.airlift.junit.ReportUnannotatedMethod
 io.airlift.junit.InitializeLogging
